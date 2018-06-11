@@ -13,6 +13,11 @@
 		90305D3220CE9C1400C0FCEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90305D3120CE9C1400C0FCEF /* Assets.xcassets */; };
 		90305D3520CE9C1400C0FCEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90305D3320CE9C1400C0FCEF /* LaunchScreen.storyboard */; };
 		90305D3E20CE9C2C00C0FCEF /* MGDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90305D3D20CE9C2C00C0FCEF /* MGDownloadManager.swift */; };
+		90C23A2020CE9C8300BF3454 /* MGCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C23A1F20CE9C8300BF3454 /* MGCollectionView.swift */; };
+		90C23A2420CE9CBD00BF3454 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C23A2220CE9CBD00BF3454 /* CollectionViewCell.swift */; };
+		90C23A2520CE9CBD00BF3454 /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90C23A2320CE9CBD00BF3454 /* CollectionViewCell.xib */; };
+		90C23A2820CEA4E700BF3454 /* download.txt in Resources */ = {isa = PBXBuildFile; fileRef = 90C23A2720CEA4E700BF3454 /* download.txt */; };
+		90C23A2A20CEA56F00BF3454 /* MGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C23A2920CEA56F00BF3454 /* MGExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +29,11 @@
 		90305D3420CE9C1400C0FCEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		90305D3620CE9C1400C0FCEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		90305D3D20CE9C2C00C0FCEF /* MGDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MGDownloadManager.swift; sourceTree = "<group>"; };
+		90C23A1F20CE9C8300BF3454 /* MGCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MGCollectionView.swift; path = ../../MGCollectionView/MGCollectionView/MGCollectionView.swift; sourceTree = "<group>"; };
+		90C23A2220CE9CBD00BF3454 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		90C23A2320CE9CBD00BF3454 /* CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
+		90C23A2720CEA4E700BF3454 /* download.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = download.txt; sourceTree = "<group>"; };
+		90C23A2920CEA56F00BF3454 /* MGExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MGExtensions.swift; path = ../../../MGExtensions/MGExtensions/MGExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +66,9 @@
 		90305D2920CE9C1400C0FCEF /* MGDownloadManager */ = {
 			isa = PBXGroup;
 			children = (
+				90C23A2620CEA4E700BF3454 /* Resources */,
+				90C23A2120CE9CA700BF3454 /* Cell */,
+				90C23A1F20CE9C8300BF3454 /* MGCollectionView.swift */,
 				90305D3C20CE9C2C00C0FCEF /* MGDownloadManager */,
 				90305D2A20CE9C1400C0FCEF /* AppDelegate.swift */,
 				90305D2C20CE9C1400C0FCEF /* ViewController.swift */,
@@ -73,6 +86,24 @@
 				90305D3D20CE9C2C00C0FCEF /* MGDownloadManager.swift */,
 			);
 			path = MGDownloadManager;
+			sourceTree = "<group>";
+		};
+		90C23A2120CE9CA700BF3454 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				90C23A2220CE9CBD00BF3454 /* CollectionViewCell.swift */,
+				90C23A2320CE9CBD00BF3454 /* CollectionViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		90C23A2620CEA4E700BF3454 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				90C23A2920CEA56F00BF3454 /* MGExtensions.swift */,
+				90C23A2720CEA4E700BF3454 /* download.txt */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,7 +166,9 @@
 			files = (
 				90305D3520CE9C1400C0FCEF /* LaunchScreen.storyboard in Resources */,
 				90305D3220CE9C1400C0FCEF /* Assets.xcassets in Resources */,
+				90C23A2520CE9CBD00BF3454 /* CollectionViewCell.xib in Resources */,
 				90305D3020CE9C1400C0FCEF /* Main.storyboard in Resources */,
+				90C23A2820CEA4E700BF3454 /* download.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,9 +179,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90C23A2420CE9CBD00BF3454 /* CollectionViewCell.swift in Sources */,
+				90C23A2020CE9C8300BF3454 /* MGCollectionView.swift in Sources */,
 				90305D2D20CE9C1400C0FCEF /* ViewController.swift in Sources */,
 				90305D2B20CE9C1400C0FCEF /* AppDelegate.swift in Sources */,
 				90305D3E20CE9C2C00C0FCEF /* MGDownloadManager.swift in Sources */,
+				90C23A2A20CEA56F00BF3454 /* MGExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

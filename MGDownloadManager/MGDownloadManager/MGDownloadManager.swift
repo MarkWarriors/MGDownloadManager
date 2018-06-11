@@ -11,26 +11,43 @@ import UIKit
 
 public class MGDownload : NSObject, URLSessionDelegate, URLSessionDownloadDelegate {
     
+    public enum MGDownloadStatus : Int {
+        case error = -1
+        case stopped = 0
+        case inDownload = 1
+        case inPause = 2
+        case canceled = 3
+        case restarting = 4
+        case removed = 5
+        case waiting = 6
+    }
+    
     public private(set) var id : Int64?
+    public private(set) var fileName : String?
     public private(set) var url : URL
-    public private(set) var localPath : String
-    public private(set) var size : Int64?
+    public private(set) var status : MGDownloadStatus = .stopped
+    public private(set) var localPath : String?
+    public private(set) var size : Int64 = 0
+    public private(set) var completion : CGFloat = 0
     public private(set) var error : String?
     
     fileprivate var task : URLSessionDownloadTask?
     fileprivate var data : Data?
     fileprivate var session : URLSession?
-    fileprivate var configuration : URLSessionConfiguration
-    fileprivate var queue : OperationQueue
+    fileprivate var configuration : URLSessionConfiguration?
+    fileprivate var queue : OperationQueue?
     
-    init(url: URL, localPath: String, session: URLSession, configuration:
-        URLSessionConfiguration, queue: OperationQueue) {
-        self.url = url
-        self.localPath = localPath
-        self.configuration = configuration
-        self.queue = queue
+    init(url: String, fileName: String?) {
+        self.url = URL.init(string: url)!
+        if fileName == nil, self.url.lastPathComponent != "" {
+            self.fileName = self.url.lastPathComponent
+        }
+        else {
+            self.fileName = fileName
+        }
+        
         super.init()
-        self.session = URLSession.init(configuration: configuration, delegate: self, delegateQueue: queue)
+//        self.session = URLSession.init(configuration: configuration, delegate: self, delegateQueue: queue)
         //TODO  shared session created by manager could be better
     }
     
@@ -63,6 +80,10 @@ public class MGDownload : NSObject, URLSessionDelegate, URLSessionDownloadDelega
     }
     
     public func cancel() {
+        self.task?.cancel()
+    }
+    
+    public func remove() {
         self.task?.cancel()
     }
     
@@ -118,19 +139,19 @@ public class MGDownloadManager {
     
     init() {
     }
+    
+    public func startAllDownloads() {
+        commandQueue.sync {
+            for download in self.runningDownloads {
+                download.task?.resume()
+            }
+        }
+    }
 
     public func pauseAllDownloads() {
         commandQueue.sync {
             for download in self.runningDownloads {
                 download.pause()
-            }
-        }
-    }
-    
-    public func resumeAllDownloads() {
-        commandQueue.sync {
-            for download in self.runningDownloads {
-                download.task?.resume()
             }
         }
     }
@@ -143,7 +164,23 @@ public class MGDownloadManager {
             self.runningDownloads.removeAll()
         }
     }
-
+    
+    public func restartAllDownloads() {
+        commandQueue.sync {
+            for download in self.runningDownloads {
+                download.task?.resume()
+            }
+        }
+    }
+    
+    public func removeAllDownloads() {
+        commandQueue.sync {
+            for download in self.runningDownloads {
+                download.task?.resume()
+            }
+        }
+    }
+    
     public func newDownload(startImmediatly: Bool? = false, addToQueue: Bool? = false) -> MGDownload? {
         var download : MGDownload?
         return download
