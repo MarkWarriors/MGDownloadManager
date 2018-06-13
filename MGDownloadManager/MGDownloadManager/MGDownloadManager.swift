@@ -123,7 +123,7 @@ public class MGDownloadManager {
     
     private var downloadPath : String?
     
-    private var simultaneusDownloads : Int?
+    private var simultaneusDownloads : Int = 3
     private var scheduledDownloads : [MGDownload] = []
     private var runningDownloads : [MGDownload] = []
     private var completedDownloads : [MGDownload] = []
@@ -141,53 +141,83 @@ public class MGDownloadManager {
     }
     
     public func startAllDownloads() {
-        commandQueue.sync {
-            for download in self.runningDownloads {
-                download.task?.resume()
+        DispatchQueue.global().async {
+            self.commandQueue.sync {
+                for download in self.scheduledDownloads {
+                    download.start()
+                }
             }
         }
     }
 
     public func pauseAllDownloads() {
-        commandQueue.sync {
-            for download in self.runningDownloads {
-                download.pause()
+        DispatchQueue.global().async {
+            self.commandQueue.sync {
+                for download in self.runningDownloads {
+                    download.pause()
+                }
             }
         }
     }
     
     public func cancelAllDownloads() {
-        commandQueue.sync {
-            for download in self.runningDownloads {
-                download.cancel()
+        DispatchQueue.global().async {
+            self.commandQueue.sync {
+                for download in self.runningDownloads {
+                    download.cancel()
+                }
+                self.runningDownloads.removeAll()
             }
-            self.runningDownloads.removeAll()
         }
     }
     
     public func restartAllDownloads() {
-        commandQueue.sync {
-            for download in self.runningDownloads {
-                download.task?.resume()
+        DispatchQueue.global().async {
+            self.commandQueue.sync {
+                for download in self.runningDownloads {
+                    download.task?.resume()
+                }
             }
         }
     }
     
     public func removeAllDownloads() {
-        commandQueue.sync {
-            for download in self.runningDownloads {
-                download.task?.resume()
+        DispatchQueue.global().async {
+            self.commandQueue.sync {
+                for download in self.runningDownloads {
+                    download.task?.resume()
+                }
             }
         }
     }
     
-    public func newDownload(startImmediatly: Bool? = false, addToQueue: Bool? = false) -> MGDownload? {
-        var download : MGDownload?
-        return download
+    private func moveDownload(_ download: MGDownload) {
+        DispatchQueue.global().async {
+            self.commandQueue.sync {
+                
+            }
+        }
     }
     
-    public func addDownloadInQueue(download: MGDownload){
-        
+    private func startDownload(_ download: MGDownload) {
+        DispatchQueue.global().async {
+            self.commandQueue.sync {
+                self.runningDownloads.append(download)
+                download.start()
+            }
+        }
+    }
+    
+//    public func newDownload(startImmediatly: Bool? = false, addToQueue: Bool = false) -> MGDownload? {
+//        var download : MGDownload?
+//        return download
+//    }
+    
+    public func addDownloadInQueue(download: MGDownload, forceStart start: Bool = false){
+        self.scheduledDownloads.append(download)
+        if start {
+            self.startDownload(download)
+        }
     }
     
     
